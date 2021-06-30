@@ -23,5 +23,7 @@ jobs:
       run: dotnet build --no-restore
     - name: Setup publish profile
       run: printf "${{ secrets.WEB_DEPLOY_PUBLISH_PROFILE }}" >> publish.pubxml
+    - name: Test
+      run: ls
     - name: Publish
       run: dotnet publish -p:PublishProfile=publish -p:Password=${{ secrets.WEB_DEPLOY_PASSWORD }}
