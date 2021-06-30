@@ -20,7 +20,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restor
+      run: dotnet build --no-restore
     - name: Setup publish profile
       run: echo ${{ secrets.WEB_DEPLOY_PUBLISH_PROFILE }} >> publish.pubxml
     - name: Publish
