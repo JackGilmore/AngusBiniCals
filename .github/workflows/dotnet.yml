@@ -22,7 +22,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Setup publish profile
-      run: printf "${{ secrets.WEB_DEPLOY_PUBLISH_PROFILE }}" >> publish.pubxml
+      run: printf "${{ secrets.WEB_DEPLOY_PUBLISH_PROFILE }}" >> Properties\publish.pubxml
     - name: Test
       run: ls
     - name: Publish
