@@ -21,6 +21,8 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
+    - name: Create publish profile folder
+      run: mkdir Properties/PublishProfiles
     - name: Setup publish profile
       run: printf "${{ secrets.WEB_DEPLOY_PUBLISH_PROFILE }}" >> Properties/PublishProfiles/publish.pubxml
     - name: Test
