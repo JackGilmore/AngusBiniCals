@@ -28,4 +28,4 @@ jobs:
     - name: Test
       run: ls
     - name: Publish
-      run: msbuild AngusBiniCals.csproj -c Release /p:DeployOnBuild=true /p:PublishProfile=publish.pubxml /p:Password=${{ secrets.WEB_DEPLOY_PASSWORD }}
+      run: msbuild AngusBiniCals.csproj /p:DeployOnBuild=true /p:PublishProfile=publish.pubxml /p:Password=${{ secrets.WEB_DEPLOY_PASSWORD }}
