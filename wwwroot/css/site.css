@@ -6,6 +6,7 @@ body {
 body {
     display: flex;
     align-items: flex-start;
+    justify-content: center;
     padding-top: 40px;
     padding-bottom: 40px;
     background-color: #f5f5f5;
@@ -15,4 +16,9 @@ main {
     width: 100%;
     padding: 15px;
     /*margin: auto;*/
+}
+
+.main-internal-sm {
+    max-width: 580px;
+    margin: auto;
 }

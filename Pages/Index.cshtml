@@ -4,4 +4,23 @@
     ViewData["Title"] = "Home";
 }
 
-<h1 class="display-1"><i class="bi bi-calendar3"></i> @ViewData["AppTitle"]</h1>
+<div class="main-internal-sm">
+    <h1 class="display-1"><i class="bi bi-calendar3"></i> @ViewData["AppTitle"]</h1>
+
+    <form method="post">
+        @Html.LabelFor(m => m.Postcode, new { @class = "form-label" })
+        @Html.TextBoxFor(m => m.Postcode, new { @class = "form-control form-control-lg" })
+        @Html.ValidationMessageFor(m => m.Postcode, string.Empty, new { @class = "text-danger" })
+        <button type="submit" class="btn btn-lg btn-primary my-3">Lookup postcode</button>
+    </form>
+
+    @if (Model.AddressEntries != null)
+    {
+        <ul>
+            @foreach (var address in Model.AddressEntries)
+            {
+                <li>@address.Address</li>
+            }
+        </ul>
+    }
+</div>
