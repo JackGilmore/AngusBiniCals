@@ -10,17 +10,21 @@
     <form method="post">
         @Html.LabelFor(m => m.Postcode, new { @class = "form-label" })
         @Html.TextBoxFor(m => m.Postcode, new { @class = "form-control form-control-lg" })
-        @Html.ValidationMessageFor(m => m.Postcode, string.Empty, new { @class = "text-danger" })
+        <div>@Html.ValidationMessageFor(m => m.Postcode, string.Empty, new { @class = "text-danger" })</div>
         <button type="submit" class="btn btn-lg btn-primary my-3">Lookup postcode</button>
     </form>
 
     @if (Model.AddressEntries != null)
     {
-        <ul>
+        <div class="list-group">
             @foreach (var address in Model.AddressEntries)
             {
-                <li>@address.Address</li>
+                <a href="#" class="list-group-item list-group-item-action">@address.AddressTrimmed</a>
             }
-        </ul>
+        </div>
+        if (!Model.AddressEntries.Any())
+        {
+            <p class="text-danger">No entries found for that postcode</p>
+        }
     }
 </div>

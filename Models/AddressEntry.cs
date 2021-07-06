@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace AngusBiniCals.Models
+﻿namespace AngusBiniCals.Models
 {
     public class AddressEntry
     {
@@ -12,6 +7,7 @@ namespace AngusBiniCals.Models
         public double Easting { get; set; }
         public double Northing { get; set; }
         public string Envelope { get; set; }
-
+        // Get the address but chop off the full stop at the end
+        public string AddressTrimmed => Address[..^1];
     }
 }
