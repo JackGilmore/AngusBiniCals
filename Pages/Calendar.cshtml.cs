@@ -40,7 +40,7 @@ namespace AngusBiniCals.Pages
 
             CalendarEntries = await _calendarService.GetDatesForUPRN(UPRN);
 
-            CalURL = Url.Action("ical", null, new {uprn = UPRN}, HttpContext.Request.Scheme);
+            CalURL = Url.ActionLink("ical", "API", new {uprn = UPRN},"webcal");
 
             return Page();
         }
