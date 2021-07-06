@@ -19,7 +19,7 @@
         <div class="list-group">
             @foreach (var address in Model.AddressEntries)
             {
-                <a href="#" class="list-group-item list-group-item-action">@address.AddressTrimmed</a>
+                <a asp-page="Calendar" asp-route-UPRN="@address.UPRN" class="list-group-item list-group-item-action">@address.AddressTrimmed</a>
             }
         </div>
         if (!Model.AddressEntries.Any())

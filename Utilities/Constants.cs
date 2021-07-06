@@ -7,6 +7,6 @@ namespace AngusBiniCals.Utilities
 {
     public static class Constants
     {
-        public static readonly string AddressSearchURL = "https://angus.locationcentre.co.uk/internet/address.aspx";
+        public static readonly string SearchURL = "https://angus.locationcentre.co.uk/internet/search.ashx?";
     }
 }

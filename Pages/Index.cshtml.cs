@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
 using AngusBiniCals.Models;
 using AngusBiniCals.Services;
@@ -10,17 +12,17 @@ namespace AngusBiniCals.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly PostcodeLookupService _postcodeLookupService;
+        private readonly AddressLookupService _addressLookupService;
         [Required]
         [BindProperty]
         [MaxLength(10)]
         public string Postcode { get; set; }
 
         public IEnumerable<AddressEntry> AddressEntries { get; set; }
-        
-        public IndexModel(PostcodeLookupService postcodeLookupService)
+
+        public IndexModel(AddressLookupService addressLookupService)
         {
-            _postcodeLookupService = postcodeLookupService;
+            _addressLookupService = addressLookupService;
         }
         public void OnGet()
         {
@@ -34,7 +36,9 @@ namespace AngusBiniCals.Pages
                 return Page();
             }
 
-            AddressEntries = await _postcodeLookupService.GetAddressesFromPostCode(Postcode);
+            AddressEntries = await _addressLookupService.GetAddressesFromPostCode(Postcode);
+
+            AddressEntries = AddressEntries.OrderBy(x => x, new AddressComparer());
 
             return Page();
         }
