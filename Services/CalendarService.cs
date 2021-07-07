@@ -47,6 +47,10 @@ namespace AngusBiniCals.Services
                 Method = "PUBLISH"
             };
 
+            calendar.AddProperty("X-WR-CALNAME","Bin calendar");
+            calendar.AddProperty("X-WR-TIMEZONE","Europe/London");
+            calendar.AddProperty("X-WR-CALDESC","Bin collection calendar for the Angus council area");
+
             var dates = await GetDatesForUPRN(uprn);
 
             var events = dates.Select(x =>
@@ -55,7 +59,7 @@ namespace AngusBiniCals.Services
                     IsAllDay = true,
                     Start = new CalDateTime(x.Date),
                     End = new CalDateTime(x.Date),
-                    Summary = $"🗑 {x.Bin}"
+                    Summary = $"{x.Bin}"
                 }
             );
 
