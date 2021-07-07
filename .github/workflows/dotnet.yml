@@ -21,13 +21,12 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.2
     - name: Restore dependencies
       run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Create publish profile folder
-      run: mkdir Properties/PublishProfiles
-    - name: Setup publish profile
-      run: printf "${{ secrets.WEB_DEPLOY_PUBLISH_PROFILE }}" >> Properties/PublishProfiles/publish.pubxml
-    - name: Test
-      run: ls
-    - name: Publish
-      run: msbuild AngusBiniCals.csproj /p:PublishProfile=publish /p:Password=${{ secrets.WEB_DEPLOY_PASSWORD }}
+    - name: Build publish version
+      run: dotnet publish --configuration Release
+    - name: Deploy via FTP
+      uses: SamKirkland/FTP-Deploy-Action@4.1.0
+      with:
+        server: ${{ secrets.ftp_server }}
+        username: ${{ secrets.ftp_user }}
+        password: ${{ secrets.ftp_password }}
+        local-dir: AngusBiniCals\bin\Release\net5.0\publish
