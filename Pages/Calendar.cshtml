@@ -15,9 +15,9 @@
     else
     {
         <div class="input-group mb-3">
-            @Html.TextBoxFor(m => m.CalURL, new {@class= "form-control", @readonly="readonly"})
+            @Html.TextBoxFor(m => m.CalURL, new { @class = "form-control", @readonly = "readonly" })
             <button class="btn btn-primary" type="button">Copy</button>
-            <a asp-action="Ical" asp-controller="API" asp-route-uprn="@Model.UPRN" asp-protocol="webcal" class="btn btn-success" type="button">Add</a>
+            <a asp-action="Ical" asp-controller="API" asp-route-uprn="@Model.UPRN" asp-protocol="webcal" class="btn btn-success">Add</a>
         </div>
         <div class="list-group text-start">
             @foreach (var entry in Model.CalendarEntries)

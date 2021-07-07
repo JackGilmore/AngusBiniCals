@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AngusBiniCals.Models;
@@ -43,27 +44,74 @@ namespace AngusBiniCals.Services
         {
             var calendar = new Calendar
             {
-                Scale = "GREGORIAN", 
+                Scale = "GREGORIAN",
                 Method = "PUBLISH"
             };
 
-            calendar.AddProperty("X-WR-CALNAME","Bin calendar");
-            calendar.AddProperty("X-WR-TIMEZONE","Europe/London");
-            calendar.AddProperty("X-WR-CALDESC","Bin collection calendar for the Angus council area");
+            calendar.AddProperty("X-WR-CALNAME", "Bin calendar");
+            calendar.AddProperty("X-WR-TIMEZONE", "Europe/London");
+            calendar.AddProperty("X-WR-CALDESC", "Bin collection calendar for the Angus council area");
 
             var dates = await GetDatesForUPRN(uprn);
 
-            var events = dates.Select(x =>
-                new CalendarEvent
+            var events = new List<CalendarEvent>();
+
+            foreach (var date in dates)
+            {
+                if (date.Bin.Contains("/"))
                 {
-                    IsAllDay = true,
-                    Start = new CalDateTime(x.Date),
-                    End = new CalDateTime(x.Date),
-                    Summary = $"{x.Bin}"
+                    var splitBins = date.Bin.Split("/");
+
+                    foreach (var bin in splitBins)
+                    {
+                        var binColourResult = Constants.BinColours.TryGetValue(bin.Trim(), out string binColour);
+
+                        if (binColourResult)
+                        {
+                            events.Add(new CalendarEvent
+                            {
+                                IsAllDay = true,
+                                Start = new CalDateTime(date.Date),
+                                End = new CalDateTime(date.Date),
+                                Summary = binColour,
+                                Alarms = { new Alarm
+                                {
+                                    Description = $"Put out the {binColour} for collection",
+                                    Action = AlarmAction.Display,
+                                    Trigger = new Trigger(TimeSpan.FromHours(-6))
+                                }}
+                            });
+                        }
+                    }
                 }
-            );
+                else
+                {
+                    var binColourResult = Constants.BinColours.TryGetValue(date.Bin, out string binColour);
+
+                    if (binColourResult)
+                    {
+                        events.Add(new CalendarEvent
+                        {
+                            IsAllDay = true,
+                            Start = new CalDateTime(date.Date),
+                            End = new CalDateTime(date.Date),
+                            Summary = binColour,
+                            Alarms = { new Alarm
+                            {
+                                Description = $"Put out the {binColour} for collection",
+                                Action = AlarmAction.Display,
+                                Trigger = new Trigger(TimeSpan.FromHours(-6))
+                            }}
+                        });
+                    }
+
+
+                }
+            }
 
             calendar.Events.AddRange(events);
+
+
 
             return calendar;
         }
