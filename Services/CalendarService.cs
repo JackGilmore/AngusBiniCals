@@ -55,7 +55,7 @@ namespace AngusBiniCals.Services
                     IsAllDay = true,
                     Start = new CalDateTime(x.Date),
                     End = new CalDateTime(x.Date),
-                    Summary = x.Bin
+                    Summary = $"🗑 {x.Bin}"
                 }
             );
 
