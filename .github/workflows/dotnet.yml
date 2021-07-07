@@ -13,16 +13,18 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
-    - name: Add msbuild to PATH
-      uses: microsoft/setup-msbuild@v1.0.2
+
     - name: Restore dependencies
       run: dotnet restore
+      
     - name: Build publish version
       run: dotnet publish --configuration Release
+      
     - name: Deploy via FTP
       uses: SamKirkland/FTP-Deploy-Action@4.1.0
       with:
