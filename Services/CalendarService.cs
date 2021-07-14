@@ -70,6 +70,7 @@ namespace AngusBiniCals.Services
                         {
                             events.Add(new CalendarEvent
                             {
+                                Uid = $"{date.Date:s}{bin.Trim()}",
                                 IsAllDay = true,
                                 Start = new CalDateTime(date.Date),
                                 End = new CalDateTime(date.Date),
@@ -92,6 +93,7 @@ namespace AngusBiniCals.Services
                     {
                         events.Add(new CalendarEvent
                         {
+                            Uid = $"{date.Date:s}{date.Bin}",
                             IsAllDay = true,
                             Start = new CalDateTime(date.Date),
                             End = new CalDateTime(date.Date),
