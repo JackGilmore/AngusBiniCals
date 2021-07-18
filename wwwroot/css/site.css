@@ -22,3 +22,28 @@ main {
     max-width: 580px;
     margin: auto;
 }
+
+/* Bin colours */
+.lgi-bin-recycling {
+    color: rgb(0,0,0);
+    background-color: #7b7b7b;
+    background-color: rgba(123, 123, 123,0.5);
+}
+
+.lgi-bin-general {
+    color: rgb(0,0,0);
+    background-color: #7f007e;
+    background-color: rgba(127, 0, 126,0.5);
+}
+
+.lgi-bin-food {
+    color: rgb(0,0,0);
+    background-color: #bf6200;
+    background-color: rgba(191, 98, 0,0.5);
+}
+
+.lgi-bin-garden {
+    color: rgb(0,0,0);
+    background-color: #007f01;
+    background-color: rgba(0, 127, 1,0.5);
+}

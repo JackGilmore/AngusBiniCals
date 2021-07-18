@@ -1,4 +1,5 @@
 ﻿@page
+@using AngusBiniCals.Utilities
 @model AngusBiniCals.Pages.CalendarModel
 @{
     ViewData["Title"] = "View calendar";
@@ -16,13 +17,19 @@
     {
         <div class="input-group mb-3">
             @Html.TextBoxFor(m => m.CalURL, new { @class = "form-control", @readonly = "readonly" })
-            <button class="btn btn-primary" type="button">Copy</button>
-            <a asp-action="Ical" asp-controller="API" asp-route-uprn="@Model.UPRN" asp-protocol="webcal" class="btn btn-success">Add</a>
+            <button class="btn btn-secondary btn-copy" data-copy-target="#CalURL" data-copy-change-btn="true" type="button">Copy</button>
+            <a asp-action="Ical" asp-controller="API" asp-route-uprn="@Model.UPRN" asp-protocol="webcal" class="btn btn-primary">Add</a>
+        </div>
+        <div>
+            <p class="mb-1">Calendar entries are set to remind you at 6pm the day before.</p>
+            <p class="mb-1">I have plans to make this configurable in future.</p>
         </div>
         <div class="list-group text-start">
             @foreach (var entry in Model.CalendarEntries)
             {
-                <div class="list-group-item">@entry.Date.ToShortDateString(): @entry.Bin</div>
+                Constants.BinClasses.TryGetValue(entry.Bin.Trim(), out var binClass);
+
+                <div class="list-group-item @binClass">@entry.Date.ToShortDateString(): @entry.Bin</div>
             }
         </div>
     }

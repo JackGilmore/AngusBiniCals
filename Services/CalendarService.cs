@@ -68,6 +68,7 @@ namespace AngusBiniCals.Services
 
                         if (binColourResult)
                         {
+                            // TODO: Make a common function for generating calendar events
                             events.Add(new CalendarEvent
                             {
                                 Uid = $"{date.Date:s}{bin.Trim()}",
@@ -79,6 +80,7 @@ namespace AngusBiniCals.Services
                                 {
                                     Description = $"Put out the {binColour} for collection",
                                     Action = AlarmAction.Display,
+                                    // TODO: Make the reminder time configurable
                                     Trigger = new Trigger(TimeSpan.FromHours(-6))
                                 }}
                             });

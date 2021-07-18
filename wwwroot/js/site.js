@@ -1,4 +1,19 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿document.querySelectorAll(".btn-copy").forEach(item => {
+    item.addEventListener("click",
+        event => {
+            var button = event.target;
+            var fieldSelector = button.dataset.copyTarget;
 
-// Write your JavaScript code.
+            var field = document.querySelector(fieldSelector);
+
+            field.select();
+            field.setSelectionRange(0, 99999);
+
+            document.execCommand("copy");
+
+            if (button.dataset.copyChangeBtn === "true") {
+                button.setAttribute("class", "btn btn-success btn-copy");
+                button.innerText = "Copied!";
+            }
+        });
+});
