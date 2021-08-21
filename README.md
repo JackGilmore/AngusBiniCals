@@ -2,10 +2,11 @@
 
 ## About the project
 
-<div style="display:flex; justify-content: space-between;">
-![](/.github/scrn_main_page.png)
-![](/.github/scrn_bin_list.png)
-</div>
+<p float="left">
+  <img src="https://github.com/JackGilmore/AngusBiniCals/blob/master/.github/images/scrn_main_page.png" width="49%" />
+  <img src="https://github.com/JackGilmore/AngusBiniCals/blob/master/.github/images/scrn_bin_list.png" width="49%" />
+</p>
+
 
 A web app which scrapes bin collection calendar information from the [Angus Council](https://angus.gov.uk) website and serves it as an iCal feed, primarily for subscription and reminders on your smartphone.
 
