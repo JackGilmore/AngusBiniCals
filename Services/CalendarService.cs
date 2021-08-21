@@ -40,13 +40,15 @@ namespace AngusBiniCals.Services
             return dates;
         }
 
-        public async Task<Calendar> GetCalendarForUPRN(string uprn)
+        public async Task<Calendar> GetCalendarForUPRN(string uprn, int? reminder = null)
         {
             var calendar = new Calendar
             {
                 Scale = "GREGORIAN",
                 Method = "PUBLISH"
             };
+
+            var trigger = reminder.HasValue ? new Trigger(TimeSpan.FromHours((double)-reminder)) : null;
 
             calendar.AddProperty("X-WR-CALNAME", "Bin calendar");
             calendar.AddProperty("X-WR-TIMEZONE", "Europe/London");
@@ -76,13 +78,12 @@ namespace AngusBiniCals.Services
                                 Start = new CalDateTime(date.Date),
                                 End = new CalDateTime(date.Date),
                                 Summary = binColour,
-                                Alarms = { new Alarm
+                                Alarms = { trigger != null ? new Alarm
                                 {
                                     Description = $"Put out the {binColour} for collection",
                                     Action = AlarmAction.Display,
-                                    // TODO: Make the reminder time configurable
-                                    Trigger = new Trigger(TimeSpan.FromHours(-6))
-                                }}
+                                    Trigger = trigger
+                                } : null}
                             });
                         }
                     }
@@ -100,23 +101,18 @@ namespace AngusBiniCals.Services
                             Start = new CalDateTime(date.Date),
                             End = new CalDateTime(date.Date),
                             Summary = binColour,
-                            Alarms = { new Alarm
+                            Alarms = { trigger != null ? new Alarm
                             {
                                 Description = $"Put out the {binColour} for collection",
                                 Action = AlarmAction.Display,
-                                Trigger = new Trigger(TimeSpan.FromHours(-6))
-                            }}
+                                Trigger = trigger
+                            } : null}
                         });
                     }
-
-
                 }
             }
 
             calendar.Events.AddRange(events);
-
-
-
             return calendar;
         }
     }

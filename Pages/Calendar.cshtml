@@ -15,14 +15,41 @@
     }
     else
     {
-        <div class="input-group mb-3">
-            @Html.TextBoxFor(m => m.CalURL, new { @class = "form-control", @readonly = "readonly" })
-            <button class="btn btn-secondary btn-copy" data-copy-target="#CalURL" data-copy-change-btn="true" type="button">Copy</button>
-            <a asp-action="Ical" asp-controller="API" asp-route-uprn="@Model.UPRN" asp-protocol="webcal" class="btn btn-primary">Add</a>
+        <div class="row mb-3">
+            <label for="reminderTime" class="col-auto col-form-label col-form-label-sm">Reminder</label>
+            <div class="col">
+                <select id="reminderTime" class="form-select form-select-sm">
+                    <option value="">None</option>
+                    <option value="1">11:00 pm</option>
+                    <option value="2">10:00 pm</option>
+                    <option value="3">9:00 pm</option>
+                    <option value="4">8:00 pm</option>
+                    <option value="5">7:00 pm</option>
+                    <option value="6" selected>6:00 pm</option>
+                    <option value="7">5:00 pm</option>
+                    <option value="8">4:00 pm</option>
+                    <option value="9">3:00 pm</option>
+                    <option value="10">2:00 pm</option>
+                    <option value="11">1:00 pm</option>
+                    <option value="12">12:00 pm</option>
+                    <option value="13">11:00 am</option>
+                    <option value="14">10:00 am</option>
+                    <option value="15">9:00 am</option>
+                    <option value="16">8:00 am</option>
+                    <option value="17">7:00 am</option>
+                    <option value="18">6:00 am</option>
+                </select>
+            </div>
         </div>
-        <div>
-            <p class="mb-1">Calendar entries are set to remind you at 6pm the day before.</p>
-            <p class="mb-1">I have plans to make this configurable in future.</p>
+        <div class="row mb-3">
+            @Html.LabelFor(m => m.CalURL, new { @class = "col-auto col-form-label col-form-label-sm" })
+            <div class="col">
+                @Html.TextBoxFor(m => m.CalURL, new { @class = "form-control form-control-sm", @readonly = "readonly" })
+            </div>
+        </div>
+        <div class="btn-group mb-3">
+            <button class="btn btn-secondary btn-copy" data-copy-target="#CalURL" data-copy-change-btn="true" type="button">Copy to clipboard</button>
+            <a asp-action="Ical" asp-controller="API" asp-route-uprn="@Model.UPRN" asp-protocol="webcal" class="btn btn-primary">Subscribe</a>
         </div>
         <div class="list-group text-start">
             @foreach (var entry in Model.CalendarEntries)
@@ -34,3 +61,23 @@
         </div>
     }
 </div>
+
+@section scripts{
+    <script>
+        let baseURL = `@Model.CalURL`;
+        let reminderSelect = document.querySelector('#reminderTime');
+        let linkBox = document.querySelector('#CalURL');
+
+        reminderSelect.addEventListener('change',
+            function() {
+                linkBox.value = reminderSelect.value ? `${baseURL}&reminder=${reminderSelect.value}` : baseURL;
+            });
+
+        document.addEventListener('DOMContentLoaded',
+            function() {
+                const evt = document.createEvent('HTMLEvents');
+                evt.initEvent('change', false, true);
+                reminderSelect.dispatchEvent(evt);
+            });
+    </script>
+}

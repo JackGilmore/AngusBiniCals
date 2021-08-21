@@ -16,9 +16,10 @@ namespace AngusBiniCals.Controllers
         {
             _calendarService = calendarService;
         }
-        public async Task<IActionResult> Ical(string uprn)
+        public async Task<IActionResult> Ical(string uprn, int? reminder = null)
         {
-            var calendar = await _calendarService.GetCalendarForUPRN(uprn);
+            // TODO: Cache this
+            var calendar = await _calendarService.GetCalendarForUPRN(uprn, reminder);
 
             var serializer = new CalendarSerializer();
             var serializedCalendar = serializer.SerializeToString(calendar);

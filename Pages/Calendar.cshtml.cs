@@ -16,6 +16,7 @@ namespace AngusBiniCals.Pages
         [Required]
         public string UPRN { get; set; }
         public string Address { get; set; }
+        [Display(Name = "Link")]
         public string CalURL { get; set; }
         public IEnumerable<CalendarEntry> CalendarEntries { get; set; }
         public CalendarModel(AddressLookupService addressLookupService, CalendarService calendarService)
@@ -40,7 +41,7 @@ namespace AngusBiniCals.Pages
 
             CalendarEntries = await _calendarService.GetDatesForUPRN(UPRN);
 
-            CalURL = Url.ActionLink("ical", "API", new {uprn = UPRN},"webcal");
+            CalURL = Url.ActionLink("ical", "API", new { uprn = UPRN }, "webcal");
 
             return Page();
         }
