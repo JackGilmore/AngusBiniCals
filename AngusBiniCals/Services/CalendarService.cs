@@ -4,33 +4,49 @@ using System.Linq;
 using System.Threading.Tasks;
 using AngusBiniCals.Models;
 using AngusBiniCals.Utilities;
+using GovServiceUtilities;
 using HtmlAgilityPack;
 using HtmlAgilityPack.CssSelectors.NetCore;
 using Ical.Net;
 using Ical.Net.CalendarComponents;
 using Ical.Net.DataTypes;
+using Microsoft.AspNetCore.Razor.Language.CodeGeneration;
 using RestSharp;
 
 namespace AngusBiniCals.Services
 {
     public class CalendarService
     {
+        private IClient _govServiceClient;
+
+        public CalendarService()
+        {
+            _govServiceClient = new Client(Constants.GovServiceUrl);
+            _govServiceClient.Init();
+        }
+
         public async Task<IEnumerable<CalendarEntry>> GetDatesForUPRN(string uprn)
         {
-            // TODO: Replace method with new code calling GovServiceUtilities
-            return new List<CalendarEntry>();
+            var result = await _govServiceClient.RequestLookup("61a74a140f9e9");
 
-            var client = new RestClient(Constants.CalendarURL);
-            var request = new RestRequest();
-            request.AddParameter("uprn", uprn);
+            var content = result.Integration.TransformedResponse.RowsData.First().Value
+                .GetValueOrDefault("dateCalHTML");
 
-            var response = await client.ExecuteAsync(request);
+            //var client = new RestClient(Constants.CalendarUrl);
+            //var request = new RestRequest();
+            //request.AddParameter("uprn", uprn);
+
+            //var response = await client.ExecuteAsync(request);
 
             var document = new HtmlDocument();
-            document.LoadHtml(response.Content);
+            document.LoadHtml(content);
+
+            var nodes = document.QuerySelectorAll("b , li").OrderBy(node => node.StreamPosition);
+
+            var nodeContent = nodes.Select(node => node.InnerText);
 
             var datesAsNodes = document.DocumentNode.QuerySelectorAll("h3 + ul li");
-
+            
             var dates = datesAsNodes.Select(x =>
                 new CalendarEntry(
                     x.InnerText
