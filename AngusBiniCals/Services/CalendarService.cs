@@ -17,8 +17,11 @@ namespace AngusBiniCals.Services
     {
         public async Task<IEnumerable<CalendarEntry>> GetDatesForUPRN(string uprn)
         {
+            // TODO: Replace method with new code calling GovServiceUtilities
+            return new List<CalendarEntry>();
+
             var client = new RestClient(Constants.CalendarURL);
-            var request = new RestRequest(Method.GET);
+            var request = new RestRequest();
             request.AddParameter("uprn", uprn);
 
             var response = await client.ExecuteAsync(request);
