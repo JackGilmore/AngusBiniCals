@@ -5,19 +5,18 @@ using System.Threading.Tasks;
 using AngusBiniCals.Models;
 using AngusBiniCals.Utilities;
 using GovServiceUtilities;
+using GovServiceUtilities.Models.Lookups;
 using HtmlAgilityPack;
 using HtmlAgilityPack.CssSelectors.NetCore;
 using Ical.Net;
 using Ical.Net.CalendarComponents;
 using Ical.Net.DataTypes;
-using Microsoft.AspNetCore.Razor.Language.CodeGeneration;
-using RestSharp;
 
 namespace AngusBiniCals.Services
 {
     public class CalendarService
     {
-        private IClient _govServiceClient;
+        private readonly IClient _govServiceClient;
 
         public CalendarService()
         {
@@ -27,34 +26,33 @@ namespace AngusBiniCals.Services
 
         public async Task<IEnumerable<CalendarEntry>> GetDatesForUPRN(string uprn)
         {
+            // TODO: Perform initial lookup request to get next recent bin dates to pass to second lookup
             var result = await _govServiceClient.RequestLookup("61a74a140f9e9");
 
             var content = result.Integration.TransformedResponse.RowsData.First().Value
                 .GetValueOrDefault("dateCalHTML");
-
-            //var client = new RestClient(Constants.CalendarUrl);
-            //var request = new RestRequest();
-            //request.AddParameter("uprn", uprn);
-
-            //var response = await client.ExecuteAsync(request);
 
             var document = new HtmlDocument();
             document.LoadHtml(content);
 
             var nodes = document.QuerySelectorAll("b , li").OrderBy(node => node.StreamPosition);
 
-            var nodeContent = nodes.Select(node => node.InnerText);
+            var dates = new List<CalendarEntry>();
 
-            var datesAsNodes = document.DocumentNode.QuerySelectorAll("h3 + ul li");
-            
-            var dates = datesAsNodes.Select(x =>
-                new CalendarEntry(
-                    x.InnerText
-                        .Replace("&nbsp;", "")
-                        .Replace("\r", "")
-                        .Replace("\n", "")
-                    )
-            );
+            string currentMonthYear = string.Empty;
+
+            foreach (var node in nodes)
+            {
+                if (node.Name == "b")
+                {
+                   currentMonthYear = node.InnerText;
+                }
+                else if (node.Name == "li" && !string.IsNullOrEmpty(currentMonthYear))
+                {
+                    // TODO: Handle cases where dates collect multiple bins (e.g. food/garden) on same day and produce multiple CalendarEntry objects
+                    dates.Add(new CalendarEntry(node.InnerText,currentMonthYear) );
+                }
+            }
 
             return dates;
         }

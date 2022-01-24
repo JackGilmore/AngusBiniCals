@@ -1,12 +1,12 @@
-﻿using System.Text;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
+
+namespace GovServiceUtilities.Models.Lookups;
 
 public class LookupRequestPayload
 {
     [JsonPropertyName("stopOnFailure")]
     public bool StopOnFailure { get; set; }
-    //[JsonPropertyName("user")]
-    //public object User { get; set; }
+
     [JsonPropertyName("formId")]
     public string FormId { get; set; }
     [JsonPropertyName("formValues")]
@@ -40,62 +40,106 @@ public class LookupRequestPayload
         {
             {
                 "Section 3", new Dictionary<string, FormValue>() {
-                { "serviceUPRN", new FormValue
-                    {
-                        Name = "serviceUPRN",
-                        Type = "text",
-                        ValueChanged = true,
-                        SectionId = "AF-Section-d41ea95d-5aed-4fbd-9338-057ddc7e7c88",
-                        Label = "UPRN",
-                        HasOther = false,
-                        Value = "117133615",
-                        Path = "root/serviceUPRN"
-                    }
-                },
-                { "nextPurpleDate", new FormValue
-                    {
-                        Name = "nextPurpleDate",
-                        Type = "text",
-                        ValueChanged = true,
-                        SectionId = "AF-Section-d41ea95d-5aed-4fbd-9338-057ddc7e7c88",
-                        HasOther = false,
-                        Value = "2022-01-27",
-                        Path = "root/nextPurpleDate"
-                    }
-                },
-                { "nextGreyDate", new FormValue
-                    {
-                        Name = "nextGreyDate",
-                        Type = "text",
-                        ValueChanged = true,
-                        SectionId = "AF-Section-d41ea95d-5aed-4fbd-9338-057ddc7e7c88",
-                        HasOther = false,
-                        Value = "2022-02-03",
-                        Path = "root/nextGreyDate"
-                    }
-                },
-                { "nextGreenDate", new FormValue
-                    {
-                        Name = "nextGreenDate",
-                        Type = "text",
-                        ValueChanged = true,
-                        SectionId = "AF-Section-d41ea95d-5aed-4fbd-9338-057ddc7e7c88",
-                        HasOther = false,
-                        Value = "2022-02-21",
-                        Path = "root/nextGreenDate"
-                    }
-                },
-                { "nextBrownDate", new FormValue
-                    {
-                        Name = "nextBrownDate",
-                        Type = "text",
-                        ValueChanged = true,
-                        SectionId = "AF-Section-d41ea95d-5aed-4fbd-9338-057ddc7e7c88",
-                        HasOther = false,
-                        Value = "2022-01-24",
-                        Path = "root/nextBrownDate"
-                    }
-                },
+                    { "serviceUPRN", new FormValue
+                        {
+                            Name = "serviceUPRN",
+                            Type = "text",
+                            ValueChanged = true,
+                            SectionId = "AF-Section-d41ea95d-5aed-4fbd-9338-057ddc7e7c88",
+                            Label = "UPRN",
+                            HasOther = false,
+                            Value = "117133615",
+                            Path = "root/serviceUPRN"
+                        }
+                    },
+                    { "nextPurpleDate", new FormValue
+                        {
+                            Name = "nextPurpleDate",
+                            Type = "text",
+                            ValueChanged = true,
+                            SectionId = "AF-Section-d41ea95d-5aed-4fbd-9338-057ddc7e7c88",
+                            HasOther = false,
+                            Value = "2022-01-27",
+                            Path = "root/nextPurpleDate"
+                        }
+                    },
+                    { "nextGreyDate", new FormValue
+                        {
+                            Name = "nextGreyDate",
+                            Type = "text",
+                            ValueChanged = true,
+                            SectionId = "AF-Section-d41ea95d-5aed-4fbd-9338-057ddc7e7c88",
+                            HasOther = false,
+                            Value = "2022-02-03",
+                            Path = "root/nextGreyDate"
+                        }
+                    },
+                    { "nextGreenDate", new FormValue
+                        {
+                            Name = "nextGreenDate",
+                            Type = "text",
+                            ValueChanged = true,
+                            SectionId = "AF-Section-d41ea95d-5aed-4fbd-9338-057ddc7e7c88",
+                            HasOther = false,
+                            Value = "2022-02-21",
+                            Path = "root/nextGreenDate"
+                        }
+                    },
+                    { "nextBrownDate", new FormValue
+                        {
+                            Name = "nextBrownDate",
+                            Type = "text",
+                            ValueChanged = true,
+                            SectionId = "AF-Section-d41ea95d-5aed-4fbd-9338-057ddc7e7c88",
+                            HasOther = false,
+                            Value = "2022-01-24",
+                            Path = "root/nextBrownDate"
+                        }
+                    },
+                    { "purpleWeekly", new FormValue
+                        {
+                            Name = "purpleWeekly",
+                            Type = "text",
+                            ValueChanged = true,
+                            SectionId = "AF-Section-d41ea95d-5aed-4fbd-9338-057ddc7e7c88",
+                            HasOther = false,
+                            Value = "N",
+                            Path = "root/purpleWeekly"
+                        }
+                    },
+                    { "greyWeekly", new FormValue
+                        {
+                            Name = "greyWeekly",
+                            Type = "text",
+                            ValueChanged = true,
+                            SectionId = "AF-Section-d41ea95d-5aed-4fbd-9338-057ddc7e7c88",
+                            HasOther = false,
+                            Value = "N",
+                            Path = "root/greyWeekly"
+                        }
+                    },
+                    { "greenWeekly", new FormValue
+                        {
+                            Name = "greenWeekly",
+                            Type = "text",
+                            ValueChanged = true,
+                            SectionId = "AF-Section-d41ea95d-5aed-4fbd-9338-057ddc7e7c88",
+                            HasOther = false,
+                            Value = "N",
+                            Path = "root/greenWeekly"
+                        }
+                    },
+                    { "brownWeekly", new FormValue
+                        {
+                            Name = "brownWeekly",
+                            Type = "text",
+                            ValueChanged = true,
+                            SectionId = "AF-Section-d41ea95d-5aed-4fbd-9338-057ddc7e7c88",
+                            HasOther = false,
+                            Value = "Y",
+                            Path = "root/brownWeekly"
+                        }
+                    },
                 }
             }
         };
@@ -144,27 +188,3 @@ public class FormValue
     [JsonPropertyName("path")]
     public string Path { get; set; }
 }
-
-
-//public class Tokens
-//{
-//    public string port { get; set; }
-//    public string host { get; set; }
-//    public string site_url { get; set; }
-//    public string site_path { get; set; }
-//    public string site_origin { get; set; }
-//    public string user_agent { get; set; }
-//    public string site_protocol { get; set; }
-//    public string session_id { get; set; }
-//    public string product { get; set; }
-//    public string formLanguage { get; set; }
-//    public string authenticationType { get; set; }
-//    public bool isAuthenticated { get; set; }
-//    public string api_url { get; set; }
-//    public string transactionReference { get; set; }
-//    public string transaction_status { get; set; }
-//    public bool published { get; set; }
-//    public string summary { get; set; }
-//    public string description { get; set; }
-//}
-

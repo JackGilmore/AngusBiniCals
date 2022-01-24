@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 
 namespace AngusBiniCals.Models
@@ -8,25 +9,29 @@ namespace AngusBiniCals.Models
         public DateTime Date { get; set; }
         public string Bin { get; set; }
 
-        public CalendarEntry(string input)
+        public CalendarEntry(string dayAndBin, string monthYear)
         {
-            var splitInput = input.Split("-").Select(x => x.Trim()).ToArray();
+            var splitDayAndBin = dayAndBin.Split("-").Select(x => x.Trim()).ToArray();
 
-            if (splitInput.Length != 2)
+            if (splitDayAndBin.Length != 2)
             {
                 throw new Exception($"Unexpected split count when parsing {typeof(CalendarEntry)}");
             }
 
-            var dateResult = DateTime.TryParse(splitInput[0], out var dateTime);
+            var dayNumber = splitDayAndBin[0].Split(" ")[1];
+
+            var mungedDate = $"{dayNumber} {monthYear}";
+
+            var dateResult = DateTime.TryParseExact(mungedDate, "dd MMMM yyyy",CultureInfo.CurrentCulture, DateTimeStyles.AllowWhiteSpaces, out var dateTime);
 
             if (!dateResult)
             {
-                throw new Exception("Could not parse DateTime from string");
+                throw new Exception($"Could not parse {typeof(DateTime)} from string: {mungedDate}");
             }
 
             Date = dateTime;
 
-            Bin = splitInput[1];
+            Bin = splitDayAndBin[1];
         }
     }
 }
