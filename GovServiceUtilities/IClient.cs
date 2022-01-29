@@ -6,7 +6,7 @@ namespace GovServiceUtilities
     public interface IClient
     {
         public Task Init();
-        public Task<LookupResponse?> RequestLookup(string lookupId);
+        public Task<LookupResponse?> RequestLookup(string lookupId, LookupRequestPayload lookupRequestPayload);
     }
     public class Client : IClient
     {
@@ -48,18 +48,12 @@ namespace GovServiceUtilities
             _restClient.AddCookie(Constants.SessionIdCookieName, _sessionId);
         }
 
-        public async Task<LookupResponse?> RequestLookup(string lookupId)
+        public async Task<LookupResponse?> RequestLookup(string lookupId, LookupRequestPayload payload)
         {
-
-
-            //var client = new RestClient("https://anguscouncil-self.achieveservice.com/apibroker/runLookup?id=61a74a140f9e9");
-
             var client = _restClient;
+            var request = new RestRequest($"apibroker/runLookup?id={lookupId}") {Method = Method.Post};
 
-            var request = new RestRequest("apibroker/runLookup?id=61a74a140f9e9") {Method = Method.Post};
-            // TODO: Shift this into CalendarService and make the designated payload a static var or template
-            request.AddJsonBody(new LookupRequestPayload());
-            //request.AddHeader("content-type", "application/json");
+            request.AddJsonBody(payload);
             RestResponse response = await client!.ExecuteAsync(request);
 
             if (string.IsNullOrEmpty(response.Content))

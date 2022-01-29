@@ -8,6 +8,10 @@ namespace AngusBiniCals.Utilities
 
         public const string GovServiceUrl = "https://anguscouncil-self.achieveservice.com/";
 
+        public const string NextBinDaysIntegrationId = "605cb3ec1f183";
+
+        public const string BinCalIntegrationId = "61a74a140f9e9";
+
         public static readonly Dictionary<string, string> BinColours = new()
         {
             { "Recycling", "♻ Grey bin" },

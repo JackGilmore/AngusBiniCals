@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
 using AngusBiniCals.Models;
 using AngusBiniCals.Services;
@@ -39,7 +41,7 @@ namespace AngusBiniCals.Pages
                 return NotFound("No address found for UPRN");
             }
 
-            CalendarEntries = await _calendarService.GetDatesForUPRN(UPRN);
+            CalendarEntries = (await _calendarService.GetDatesForUPRN(UPRN)).Where(entry => entry.Date.Date >= DateTime.Today);
 
             CalURL = Url.ActionLink("ical", "API", new { uprn = UPRN }, "webcal");
 
