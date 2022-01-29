@@ -35,4 +35,4 @@ jobs:
         server: ${{ secrets.ftp_server }}
         username: ${{ secrets.ftp_user }}
         password: ${{ secrets.ftp_password }}
-        local-dir: bin/Release/net6.0/publish/
+        local-dir: AngusBiniCals/bin/Release/net6.0/publish
