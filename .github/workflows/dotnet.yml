@@ -26,6 +26,9 @@ jobs:
     - name: Build publish version
       run: dotnet publish --configuration Release
       
+    - name: List dir
+      run: ls -R -l
+      
     - name: Deploy via FTP
       uses: SamKirkland/FTP-Deploy-Action@4.1.0
       with:
