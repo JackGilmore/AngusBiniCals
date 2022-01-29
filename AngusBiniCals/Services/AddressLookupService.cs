@@ -30,8 +30,8 @@ namespace AngusBiniCals.Services
 
         private static async Task<IEnumerable<AddressEntry>> SearchCAG(string search)
         {
-            var client = new RestClient($"{Constants.SearchURL}{search}");
-            var request = new RestRequest(Method.GET);
+            var client = new RestClient($"{Constants.SearchUrl}{search}");
+            var request = new RestRequest();
 
             var response = await client.ExecuteAsync(request);
 
