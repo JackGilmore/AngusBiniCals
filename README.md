@@ -11,7 +11,7 @@
 A web app which scrapes bin collection calendar information from the [Angus Council](https://angus.gov.uk) website and serves it as an iCal feed, primarily for subscription and reminders on your smartphone.
 
 ### Built with
-- .NET 5.0
+- .NET 6.0
 - Bootstrap
 - HtmlAgilityPack
 - RestSharp
