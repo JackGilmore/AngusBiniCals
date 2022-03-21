@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -39,7 +40,7 @@ namespace AngusBiniCals.Services
             {
                 PropertyNameCaseInsensitive = true
             };
-            var addresses = JsonSerializer.Deserialize<IEnumerable<AddressEntry>>(response.Content,options);
+            var addresses = JsonSerializer.Deserialize<IEnumerable<AddressEntry>>(response.Content ?? throw new InvalidOperationException("Null response from CAG"),options);
 
             return addresses;
         }

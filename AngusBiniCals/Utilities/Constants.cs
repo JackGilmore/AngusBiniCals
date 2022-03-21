@@ -18,7 +18,9 @@ namespace AngusBiniCals.Utilities
             { "Recycling Waste", "♻ Grey bin" },
             { "General Waste", "🗑 Purple bin" },
             { "Food Waste", "🥑 Brown caddy" },
+            { "Food", "🥑 Brown caddy" },
             { "Garden Waste (Subscription Only)", "🍂 Green bin" },
+            { "Garden Waste", "🍂 Green bin" }
         };
 
         public static readonly Dictionary<string, string> BinClasses = new()

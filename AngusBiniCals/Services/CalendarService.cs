@@ -8,7 +8,6 @@ using GovServiceUtilities;
 using HtmlAgilityPack;
 using HtmlAgilityPack.CssSelectors.NetCore;
 using Ical.Net;
-using Ical.Net.CalendarComponents;
 using Ical.Net.DataTypes;
 
 namespace AngusBiniCals.Services
@@ -65,7 +64,6 @@ namespace AngusBiniCals.Services
                 }
                 else if (node.Name == "li" && !string.IsNullOrEmpty(currentMonthYear))
                 {
-                    // TODO: Handle cases where dates collect multiple bins (e.g. food/garden) on same day and produce multiple CalendarEntry objects
                     dates.Add(new CalendarEntry(node.InnerText, currentMonthYear));
                 }
             }
@@ -89,63 +87,8 @@ namespace AngusBiniCals.Services
 
             var dates = await GetDatesForUPRN(uprn);
 
-            var events = new List<CalendarEvent>();
+            dates.ToList().ForEach(d => calendar.Events.AddRange(d.ToCalendarEvent(trigger)));
 
-            foreach (var date in dates)
-            {
-                if (date.Bin.Contains("/"))
-                {
-                    var splitBins = date.Bin.Split("/");
-
-                    foreach (var bin in splitBins)
-                    {
-                        var binColourResult = Constants.BinColours.TryGetValue(bin.Trim(), out string binColour);
-
-                        if (binColourResult)
-                        {
-                            // TODO: Make a common function for generating calendar events
-                            events.Add(new CalendarEvent
-                            {
-                                Uid = $"{date.Date:s}{bin.Trim()}",
-                                IsAllDay = true,
-                                Start = new CalDateTime(date.Date),
-                                End = new CalDateTime(date.Date),
-                                Summary = binColour,
-                                Alarms = { trigger != null ? new Alarm
-                                {
-                                    Description = $"Put out the {binColour} for collection",
-                                    Action = AlarmAction.Display,
-                                    Trigger = trigger
-                                } : null}
-                            });
-                        }
-                    }
-                }
-                else
-                {
-                    var binColourResult = Constants.BinColours.TryGetValue(date.Bin, out string binColour);
-
-                    if (binColourResult)
-                    {
-                        events.Add(new CalendarEvent
-                        {
-                            Uid = $"{date.Date:s}{date.Bin}",
-                            IsAllDay = true,
-                            Start = new CalDateTime(date.Date),
-                            End = new CalDateTime(date.Date),
-                            Summary = binColour,
-                            Alarms = { trigger != null ? new Alarm
-                            {
-                                Description = $"Put out the {binColour} for collection",
-                                Action = AlarmAction.Display,
-                                Trigger = trigger
-                            } : null}
-                        });
-                    }
-                }
-            }
-
-            calendar.Events.AddRange(events);
             return calendar;
         }
     }
