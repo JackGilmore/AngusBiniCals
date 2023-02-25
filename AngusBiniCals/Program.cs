@@ -14,7 +14,7 @@ namespace AngusBiniCals
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseUrls("http://+:9000");
+                    webBuilder.UseUrls("http://+:9000","https://+:9000");
                     webBuilder.UseStartup<Startup>();
                 });
     }
