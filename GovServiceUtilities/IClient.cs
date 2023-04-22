@@ -51,7 +51,7 @@ namespace GovServiceUtilities
         public async Task<LookupResponse?> RequestLookup(string lookupId, LookupRequestPayload payload)
         {
             var client = _restClient;
-            var request = new RestRequest($"apibroker/runLookup?id={lookupId}") {Method = Method.Post};
+            var request = new RestRequest($"apibroker/runLookup?id={lookupId}") { Method = Method.Post };
 
             request.AddJsonBody(payload);
             RestResponse response = await client!.ExecuteAsync(request);
@@ -62,7 +62,12 @@ namespace GovServiceUtilities
             }
 
             var parsedResponse = JsonSerializer.Deserialize<LookupResponse>(response.Content);
-            
+
+            Console.WriteLine($"Got response back with status: {response.StatusCode}");
+            if (!response.IsSuccessful)
+            {
+                Console.WriteLine($"Response: {parsedResponse}");
+            }
 
             return parsedResponse;
         }
