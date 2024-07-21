@@ -51,3 +51,9 @@ main {
 .lgi-bin-food-garden {
     background: linear-gradient(to left, rgba(191, 98, 0,0.5) 50%, rgba(0, 127, 1,0.5) 50%);
 }
+
+.lgi-bin-paper {
+    color: rgb(0,0,0);
+    background-color: #A7C7E7;
+    background-color: rgba(167, 199, 231,0.5);
+}

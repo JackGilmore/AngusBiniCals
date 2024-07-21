@@ -16,7 +16,7 @@ public class CalendarEntry
 
     public CalendarEntry(string dayAndBin, string monthYear)
     {
-        var splitDayAndBin = dayAndBin.Split("-").Select(x => x.Trim()).ToArray();
+        var splitDayAndBin = dayAndBin.Split("-",2).Select(x => x.Trim()).ToArray();
 
         if (splitDayAndBin.Length != 2)
         {

@@ -4,6 +4,7 @@ using GovServiceUtilities.Models.Lookups;
 
 namespace AngusBiniCals.Utilities
 {
+    // TODO: These payloads can probably be massively simplified
     public static class Payloads
     {
         public static LookupRequestPayload NextBinDaysPayload(string uprn)
@@ -59,7 +60,7 @@ namespace AngusBiniCals.Utilities
                 }
             };
         }
-        public static LookupRequestPayload CalendarRequestPayload(string uprn, string purpleDate, string greyDate, string greenDate, string brownDate)
+        public static LookupRequestPayload CalendarRequestPayload(string uprn, string purpleDate, string greyDate, string greenDate, string brownDate, string blueDate)
         {
             return new LookupRequestPayload()
             {
@@ -130,6 +131,18 @@ namespace AngusBiniCals.Utilities
                                 }
                             },
                             {
+                                "nextBlueDate", new FormValue
+                                {
+                                    Name = "nextBlueDate",
+                                    Type = "text",
+                                    ValueChanged = true,
+                                    SectionId = "AF-Section-d41ea95d-5aed-4fbd-9338-057ddc7e7c88",
+                                    HasOther = false,
+                                    Value = blueDate,
+                                    Path = "root/nextBlueDate"
+                                }
+                            },
+                            {
                                 "purpleWeekly", new FormValue
                                 {
                                     Name = "purpleWeekly",
@@ -175,6 +188,18 @@ namespace AngusBiniCals.Utilities
                                     HasOther = false,
                                     Value = "Y",
                                     Path = "root/brownWeekly"
+                                }
+                            },
+                            {
+                                "blueWeekly", new FormValue
+                                {
+                                    Name = "blueWeekly",
+                                    Type = "text",
+                                    ValueChanged = true,
+                                    SectionId = "AF-Section-d41ea95d-5aed-4fbd-9338-057ddc7e7c88",
+                                    HasOther = false,
+                                    Value = "N",
+                                    Path = "root/blueWeekly"
                                 }
                             },
                         }

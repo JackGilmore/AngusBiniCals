@@ -36,7 +36,7 @@ namespace AngusBiniCals.Services
                 throw new NullReferenceException($"Could not retrieve next bin days for UPRN {uprn}");
             }
 
-            var binCalResult = await _govServiceClient.RequestLookup(Constants.BinCalIntegrationId, Payloads.CalendarRequestPayload(uprn, binDays["Purple"], binDays["Grey"], binDays["Green"], binDays["Brown"]));
+            var binCalResult = await _govServiceClient.RequestLookup(Constants.BinCalIntegrationId, Payloads.CalendarRequestPayload(uprn, binDays["Purple"], binDays["Grey"], binDays["Green"], binDays["Brown"], binDays["Blue"]));
 
             if (binCalResult == null)
             {
