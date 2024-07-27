@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Net;
+using System.Text.Json;
 using GovServiceUtilities.Models.Lookups;
 using RestSharp;
 namespace GovServiceUtilities
@@ -21,7 +22,8 @@ namespace GovServiceUtilities
 
         public async Task Init()
         {
-            _restClient = new RestClient(BaseUrl);
+            var options = new RestClientOptions(BaseUrl) { CookieContainer = new CookieContainer() };
+            _restClient = new RestClient(options);
             var cookieRequest = new RestRequest();
             var cookieResponse = await _restClient.ExecuteAsync(cookieRequest);
 
@@ -45,7 +47,10 @@ namespace GovServiceUtilities
             }
 
             _sessionId = sessionId.Value;
-            _restClient.AddCookie(Constants.SessionIdCookieName, _sessionId);
+
+            var cookie = new Cookie(Constants.SessionIdCookieName, _sessionId);            
+
+            _restClient.Options.CookieContainer.Add(cookie);
         }
 
         public async Task<LookupResponse?> RequestLookup(string lookupId, LookupRequestPayload payload)

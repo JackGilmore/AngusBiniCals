@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AngusBiniCals.Services;
+using System.Globalization;
 
 namespace AngusBiniCals
 {
@@ -47,6 +48,10 @@ namespace AngusBiniCals
             app.UseRouting();
 
             app.UseAuthorization();
+
+            var cultureInfo = new CultureInfo("en-GB");
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
             app.UseEndpoints(endpoints =>
             {
